@@ -1,5 +1,4 @@
 # Ignorar archivos de caché y bases de datos
-*.json
 *.csv
 *.env
 !asteroid-dashboard-react/package.json
