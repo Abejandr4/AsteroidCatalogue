@@ -224,13 +224,13 @@ function OrbitSimulator({ onReturn, targetAsteroid }) {
       {/* Bottom right buttons */}
       <div className="simulatorButtons">
         <button className="simulatorActionButton refreshButton" onClick={handleRefresh}>
-          ↻ Refresh
+          ↻ Recargar
         </button>
         <button className="simulatorActionButton refreshButton" onClick={onReturn}>
-          ← Return
+          ← Regresar
         </button>
         <button className='simulatorActionButton refreshButton' onClick={toggleHideOrbits}>
-          {hideOrbits ? 'Show Orbits' : 'Hide Orbits'}
+          {hideOrbits ? 'Mostar otros asteroides' : 'Ocultar otros asteroides'}
         </button>
       </div>
 

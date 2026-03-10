@@ -9,10 +9,10 @@ function FilterInfoPopup({ onClose }) {
       <div className="infoPopupContent" onClick={(e) => e.stopPropagation()}>
         <h3 className="infoPopupTitle">Filter Explanations</h3>
         <ul>
-          <li><strong>Search by name:</strong> Filters the list based on the asteroid's name or identifier.</li>
+          <li><strong>Busqueda por nombre:</strong> Filters the list based on the asteroid's name or identifier.</li>
           <li><strong>PHA/Non-PHA:</strong> Filters for Potentially Hazardous Asteroids.</li>
-          <li><strong>Name Type:</strong> Filters asteroids that have a proper full name versus just a provisional designation.</li>
-          <li><strong>Diameter:</strong> Filters asteroids by their estimated size (in kilometers).
+          <li><strong>Tipo de nombre:</strong> Filters asteroids that have a proper full name versus just a provisional designation.</li>
+          <li><strong>Diámetro:</strong> Filters asteroids by their estimated size (in kilometers).
             <ul>
               <li><small>&lt; 1 km: Smaller objects, very common.</small></li>
               <li><small>1-10 km: Medium-sized asteroids.</small></li>
@@ -90,7 +90,7 @@ function AsteroidList() {
       <div className="controlsContainer">
         <input 
           type="text"
-          placeholder="Search by name..."
+          placeholder="Nombre de asteroide..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="searchInput"
@@ -115,16 +115,16 @@ function AsteroidList() {
         {/* New Filters */}
         <div className="filterGrid">
           <div className="filterGroup">
-            <label className="filterLabel">Name Type</label>
+            <label className="filterLabel">Tipo de nombre</label>
             <select className="filterSelect" value={nameFilter} onChange={(e) => setNameFilter(e.target.value)}>
-              <option value="all">All</option>
-              <option value="with-name">With Full Name</option>
+              <option value="all">Todos los tipos</option>
+              <option value="with-name">Nombre completo</option>
             </select>
           </div>
           <div className="filterGroup">
-            <label className="filterLabel">Diameter (km)</label>
+            <label className="filterLabel">Diámetro (km)</label>
             <select className="filterSelect" value={diameterFilter} onChange={(e) => setDiameterFilter(e.target.value)}>
-              <option value="all">All Sizes</option>
+              <option value="all">Todos los tamaños</option>
               <option value="small">&lt; 1 km</option>
               <option value="medium">1 - 10 km</option>
               <option value="large">&gt; 10 km</option>
