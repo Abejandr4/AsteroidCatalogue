@@ -7,20 +7,20 @@ function FilterInfoPopup({ onClose }) {
   return (
     <div className="infoPopupOverlay" onClick={onClose}>
       <div className="infoPopupContent" onClick={(e) => e.stopPropagation()}>
-        <h3 className="infoPopupTitle">Filter Explanations</h3>
+        <h3 className="infoPopupTitle">Explicación de filtros</h3>
         <ul>
-          <li><strong>Busqueda por nombre:</strong> Filters the list based on the asteroid's name or identifier.</li>
-          <li><strong>PHA/Non-PHA:</strong> Filters for Potentially Hazardous Asteroids.</li>
-          <li><strong>Tipo de nombre:</strong> Filters asteroids that have a proper full name versus just a provisional designation.</li>
-          <li><strong>Diámetro:</strong> Filters asteroids by their estimated size (in kilometers).
+          <li><strong>Búsqueda por nombre:</strong> Busca el nombre de un asteroide.</li>
+          <li><strong>Peligro:</strong> Filtra basado en el peligro que representa el asteroide.</li>
+          <li><strong>Tipo de nombre:</strong> Filtra basado en si el asteroide tiene nombre propio o uno temporal.</li>
+          <li><strong>Diámetro:</strong> Filtra basado en el diámetro del asteroide (el tamaño).
             <ul>
-              <li><small>&lt; 1 km: Smaller objects, very common.</small></li>
-              <li><small>1-10 km: Medium-sized asteroids.</small></li>
-              <li><small>&gt; 10 km: Large objects, less common and of significant interest.</small></li>
+              <li><small>&lt; 1 km: Los más pequeños y comúnes.</small></li>
+              <li><small>1-10 km: Tamaño medio.</small></li>
+              <li><small>&gt; 10 km: Los más grandes y de interés.</small></li>
             </ul>
           </li>
         </ul>
-        <button onClick={onClose} className="infoPopupCloseButton">Close</button>
+        <button onClick={onClose} className="infoPopupCloseButton">Cerrar</button>
       </div>
     </div>
   );
@@ -80,9 +80,10 @@ function AsteroidList() {
   return (
     <div className="listContainer">
       {showInfoPopup && <FilterInfoPopup onClose={() => setShowInfoPopup(false)} />}
-<a href="https://neo-sphere-pi.vercel.app/" className='returnButton'>
-  Regresar
-</a>      <div className="listTitleContainer">
+      {/* <a href="https://neo-sphere-pi.vercel.app/" className='returnButton'>
+        Regresar
+      </a> */}
+      <div className="listTitleContainer">
           <h2 className="listTitle">Catálogo de asteroides</h2>
         <button className="suggestionButton" onClick={() => setShowInfoPopup(true)}>?</button>
       </div>

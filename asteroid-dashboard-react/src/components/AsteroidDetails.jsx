@@ -48,39 +48,39 @@ const ModuleButton = ({ label, value, onClick, unit = '' }) => (
   </motion.button>
 );
 
-// --- Popup Content Definitions ---
+// --- Definiciones de Contenido para Popups ---
 const POPUP_DEFINITIONS = {
   MOID: {
-    title: 'Minimum Orbit Intersection Distance (MOID)',
-    description: 'MOID is the minimum distance between the orbits of two bodies. In this case, it represents the closest the asteroid\'s orbit comes to Earth\'s orbit. A smaller value indicates a higher potential for a close approach. It is measured in Astronomical Units (AU).',
+    title: 'Distancia mínima de intersección orbital (MOID)',
+    description: 'El MOID es la distancia mínima entre las órbitas de dos cuerpos. En este caso, representa lo más cerca que la órbita del asteroide llega a la órbita de la Tierra. Un valor menor indica un mayor potencial de acercamiento. Se mide en Unidades Astronómicas (AU).',
   },
   PERIHELION: {
-    title: 'Perihelion Distance (q)',
-    description: 'This is the point in the asteroid\'s orbit where it is closest to the Sun. A small perihelion means the asteroid travels deep into the inner solar system. It is measured in Astronomical Units (AU).',
+    title: 'Distancia de Perihelio (q)',
+    description: 'Este es el punto en la órbita del asteroide donde se encuentra más cerca del Sol. Un perihelio pequeño significa que el asteroide se adentra profundamente en el sistema solar interior. Se mide en Unidades Astronómicas (AU).',
   },
   APHELION: {
-    title: 'Aphelion Distance (ad)',
-    description: 'This is the point in the asteroid\'s orbit where it is farthest from the Sun. The aphelion distance defines the outer boundary of the asteroid\'s journey. It is measured in Astronomical Units (AU).',
+    title: 'Distancia de Afelio (ad)',
+    description: 'Este es el punto en la órbita del asteroide donde se encuentra más alejado del Sol. La distancia de afelio define el límite exterior del recorrido del asteroide. Se mide en Unidades Astronómicas (AU).',
   },
   DIAMETER: {
-    title: 'Estimated Diameter',
-    description: 'This is the estimated diameter of the asteroid, measured in kilometers. The size is often estimated based on its brightness (absolute magnitude) and reflectivity (albedo), as direct measurements are rare.',
+    title: 'Diámetro Estimado',
+    description: 'Este es el diámetro estimado del asteroide, medido en kilómetros. El tamaño se estima a menudo basándose en su brillo (magnitud absoluta) y su reflectividad (albedo), ya que las mediciones directas son poco comunes.',
   },
   ROTATION: {
-    title: 'Rotation Period',
-    description: 'This is the time it takes for the asteroid to complete one full rotation on its axis. It gives us an idea of the "day" length on the asteroid and is measured in hours.',
+    title: 'Periodo de Rotación',
+    description: 'Es el tiempo que tarda el asteroide en completar una rotación completa sobre su eje. Nos da una idea de la duración del "día" en el asteroide y se mide en horas.',
   },
   MAGNITUDE: {
-    title: 'Absolute Magnitude (H)',
-    description: 'Absolute Magnitude is a measure of an asteroid\'s intrinsic brightness. It\'s the brightness it would have if it were viewed from a standard distance. A smaller number means a brighter (and likely larger) object.',
+    title: 'Magnitud Absoluta (H)',
+    description: 'La Magnitud Absoluta es una medida del brillo intrínseco de un asteroide. Es el brillo que tendría si se viera desde una distancia estándar. Un número menor significa un objeto más brillante (y probablemente más grande).',
   },
   ALBEDO: {
     title: 'Albedo',
-    description: 'Albedo measures the reflectivity of the asteroid\'s surface. It is a value between 0 (perfectly black, absorbs all light) and 1 (perfectly white, reflects all light). It helps in estimating the asteroid\'s size and composition.',
+    description: 'El albedo mide la reflectividad de la superficie del asteroide. Es un valor entre 0 (perfectamente negro, absorbe toda la luz) y 1 (perfectamente blanco, refleja toda la luz). Ayuda a estimar el tamaño y la composición del asteroide.',
   },
   HAZARD: {
-    title: 'Potentially Hazardous Asteroid (PHA)',
-    description: 'An asteroid is classified as "Potentially Hazardous" if its Minimum Orbit Intersection Distance (MOID) with Earth is less than 0.05 AU and its absolute magnitude (H) is 22.0 or brighter. This classification does not mean an impact is imminent, only that it warrants careful monitoring.',
+    title: 'Asteroide Potencialmente Peligroso (PHA)',
+    description: 'Un asteroide se clasifica como "Potencialmente Peligroso" si su Distancia Mínima de Intersección de Órbita (MOID) con la Tierra es menor a 0.05 AU y su magnitud absoluta (H) es de 22.0 o más brillante. Esta clasificación no significa que un impacto sea inminente, solo que requiere un monitoreo cuidadoso.',
   },
 };
 
@@ -145,7 +145,7 @@ function AsteroidDetails() {
           </button>
         </div>
         
-        <AsteroidAIInsights className="AI" asteroid={selectedAsteroid} />
+        {/* <AsteroidAIInsights className="AI" asteroid={selectedAsteroid} /> */}
 
         <div className='moduleGroup'>
           <h2 className="moduleGroupTitle">Distances & Orbit</h2>
