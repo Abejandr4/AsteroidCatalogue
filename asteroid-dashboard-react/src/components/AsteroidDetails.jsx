@@ -103,7 +103,7 @@ function AsteroidDetails() {
     return (
       <div className="detailsPanel welcomeMessage">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="welcomeSubtitle">Select an asteroid to see its data</p>
+          <p className="welcomeSubtitle">Selecciona un asteroide para ver sus datos</p>
         </motion.div>
       </div>
     );
@@ -141,37 +141,37 @@ function AsteroidDetails() {
           <h1 className="detailsTitle">{selectedAsteroid.full_name || selectedAsteroid.identificador}</h1>
           {/* CHANGED: This button now returns the user to the default Orbit view */}
           <button className="simulatorButton" onClick={() => setShowSimulator(true)}>
-            ← Back to Orbit
+            ← Regresar a la órbita
           </button>
         </div>
         
         {/* <AsteroidAIInsights className="AI" asteroid={selectedAsteroid} /> */}
 
         <div className='moduleGroup'>
-          <h2 className="moduleGroupTitle">Distances & Orbit</h2>
-          <p className='infoDetails'>(Click for more info.)</p>
+          <h2 className="moduleGroupTitle">Distancias y órbita</h2>
+          <p className='infoDetails'>(Dale click a las cajas para más información)</p>
           <div className="moduleGrid">
-            <ModuleButton label="Min. Orbit Distance" value={selectedAsteroid.distancia_min_orbita_au?.toFixed(4) || 'N/A'} unit="AU" onClick={() => setPopupContent(POPUP_DEFINITIONS.MOID)} />
-            <ModuleButton label="Perihelion (Closest to Sun)" value={selectedAsteroid.q?.toFixed(3) || 'N/A'} unit="AU" onClick={() => setPopupContent(POPUP_DEFINITIONS.PERIHELION)} />
-            <ModuleButton label="Aphelion (Farthest from Sun)" value={selectedAsteroid.ad?.toFixed(3) || 'N/A'} unit="AU" onClick={() => setPopupContent(POPUP_DEFINITIONS.APHELION)} />
-            <ModuleButton label="Orbital Period" value={selectedAsteroid.periodo_orbital_anios?.toFixed(2) || 'N/A'} unit="years" />
+            <ModuleButton label="Distancia mínima de intersección orbital (MOID)" value={selectedAsteroid.distancia_min_orbita_au?.toFixed(4) || 'Sin asignar'} unit="UA" onClick={() => setPopupContent(POPUP_DEFINITIONS.MOID)} />
+            <ModuleButton label="Perihelio (la más cercana al Sol)" value={selectedAsteroid.q?.toFixed(3) || 'Sin asignar'} unit="UA" onClick={() => setPopupContent(POPUP_DEFINITIONS.PERIHELION)} />
+            <ModuleButton label="Afelio (la más lejana al Sol)" value={selectedAsteroid.ad?.toFixed(3) || 'Sin asignar'} unit="UA" onClick={() => setPopupContent(POPUP_DEFINITIONS.APHELION)} />
+            <ModuleButton label="Periodo orbital" value={selectedAsteroid.periodo_orbital_anios?.toFixed(2) || 'Sin asignar'} unit="años" />
           </div>
         </div>
 
         <div className="moduleGroup">
-          <h2 className="moduleGroupTitle">Physical Characteristics</h2>
+          <h2 className="moduleGroupTitle">Características físicas</h2>
           <div className="moduleGrid">
-            <ModuleButton label="Estimated Diameter" value={selectedAsteroid.diameter?.toFixed(2) || 'N/A'} unit="km" onClick={() => setPopupContent(POPUP_DEFINITIONS.DIAMETER)} />
-            <ModuleButton label="Rotation Period" value={selectedAsteroid.periodo_rotacion_horas?.toFixed(2) || 'N/A'} unit="hours" onClick={() => setPopupContent(POPUP_DEFINITIONS.ROTATION)} />
+            <ModuleButton label="Diámetro estimado" value={selectedAsteroid.diameter?.toFixed(2) || 'Sin asignar'} unit="km" onClick={() => setPopupContent(POPUP_DEFINITIONS.DIAMETER)} />
+            <ModuleButton label="Periodo de rotación" value={selectedAsteroid.periodo_rotacion_horas?.toFixed(2) || 'Sin asignar'} unit="horas" onClick={() => setPopupContent(POPUP_DEFINITIONS.ROTATION)} />
           </div>
         </div>
         
         <div className="moduleGroup2">
-          <h2 className="moduleGroupTitle">Luminance & Hazard</h2>
+          <h2 className="moduleGroupTitle">Luminancia y Peligro</h2>
           <div className="moduleGrid">
-            <ModuleButton label="Absolute Magnitude" value={selectedAsteroid.magnitud_absoluta?.toFixed(2) || 'N/A'} onClick={() => setPopupContent(POPUP_DEFINITIONS.MAGNITUDE)} />
-            <ModuleButton label="Albedo (Reflectivity)" value={selectedAsteroid.albedo || 'N/A'} onClick={() => setPopupContent(POPUP_DEFINITIONS.ALBEDO)} />
-            <ModuleButton label="Hazard Level" value={isHazardous ? 'PHA' : 'Non-PHA'} onClick={() => setPopupContent(POPUP_DEFINITIONS.HAZARD)} />
+            <ModuleButton label="Magnitud absoluta" value={selectedAsteroid.magnitud_absoluta?.toFixed(2) || 'Sin asignar'} onClick={() => setPopupContent(POPUP_DEFINITIONS.MAGNITUDE)} />
+            <ModuleButton label="Albedo" value={selectedAsteroid.albedo || 'Sin asignar'} onClick={() => setPopupContent(POPUP_DEFINITIONS.ALBEDO)} />
+            <ModuleButton label="Nivel de peligro" value={isHazardous ? 'PHA (peligroso)' : 'No es PHA (no es peligroso)'} onClick={() => setPopupContent(POPUP_DEFINITIONS.HAZARD)} />
           </div>
         </div>
       </motion.div>

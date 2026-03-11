@@ -4,6 +4,19 @@ import { Canvas, useLoader } from '@react-three/fiber';
 import { Line, Text, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
+const PLANET_NAME_MAP = {
+  "Mercury": "Mercurio",
+  "Venus": "Venus",
+  "Earth": "Tierra",
+  "Mars": "Marte",
+  "Jupiter": "Júpiter",
+  "Saturn": "Saturno",
+  "Uranus": "Urano",
+  "Neptune": "Neptuno",
+  "Sun": "Sol",
+  "Asteroids": "Asteroides" // Añadido para la leyenda
+};
+
 // This is now the INITIAL state for the planet colors
 const INITIAL_PLANET_COLORS = {
   "Mercury": "#a0a0a0",
@@ -34,7 +47,9 @@ function Sun() {
       <mesh>
         <sphereGeometry args={[0.2, 32, 32]} />
         <meshBasicMaterial map={sunTexture} />
-        <Text position={[0, 0.3, 0]} fontSize={0.2} color="white" anchorX="center">Sun</Text>
+        <Text position={[0, 0.3, 0]} fontSize={0.2} color="white" anchorX="center">
+          {PLANET_NAME_MAP["Sun"]}
+        </Text>
       </mesh>
       <pointLight position={[0, 0, 0]} color="var(--color-primary)" intensity={3} distance={100} />
     </>
@@ -42,7 +57,7 @@ function Sun() {
 }
 
 // Scene now accepts the full color objects as props and hideOrbits state
-function Scene({ planetColors, asteroidColor, hideOrbits, hiddenAsteroids, targetAsteroid }) {
+function Scene({ planetColors, asteroidColor, hideOrbits, targetAsteroid }) {
   const [orbits, setOrbits] = useState({});
   const [error, setError] = useState(null);
 
@@ -70,9 +85,10 @@ function Scene({ planetColors, asteroidColor, hideOrbits, hiddenAsteroids, targe
         
         // Check if the orbit belongs to a planet using the passed colors object
         const isPlanet = planetColors.hasOwnProperty(nombre);
+        const isTarget = nombre === targetAsteroid;
         
-        // Hide asteroid if it's in the hidden list and hideOrbits is active
-        if (!isPlanet && hideOrbits && targetAsteroid && nombre !== targetAsteroid && hiddenAsteroids.current.includes(nombre)) {
+        // CORRECCIÓN FERONIA: Si hideOrbits está activo, ocultamos TODO lo que no sea planeta y no sea el objetivo buscado
+        if (hideOrbits && !isPlanet && !isTarget) {
           return null;
         }
         
@@ -99,7 +115,7 @@ function Scene({ planetColors, asteroidColor, hideOrbits, hiddenAsteroids, targe
               anchorX="left"
               anchorY="middle"
             >
-              {nombre}
+              {PLANET_NAME_MAP[nombre] || nombre}
             </Text>
           </React.Fragment>
         );
@@ -115,49 +131,9 @@ function OrbitSimulator({ onReturn, targetAsteroid }) {
   const [canvasKey, setCanvasKey] = useState(0);
   const [hideOrbits, setHideOrbits] = useState(false);
   
-  // Use ref to store fixed hidden asteroids
+  // Use ref to store fixed hidden asteroids (Nota: con la nueva lógica de Scene, este ref ya no es estrictamente necesario para ocultar, pero lo mantenemos para no romper la estructura)
   const hiddenAsteroids = useRef([]);
   const isInitialized = useRef(false);
-
-  // Initialize hidden asteroids once when orbits are loaded
-  useEffect(() => {
-    if (!isInitialized.current) {
-      async function initHiddenAsteroids() {
-        try {
-          const response = await fetch(`${import.meta.env.BASE_URL}orbitas_3d.json`);
-          if (response.ok) {
-            const data = await response.json();
-            const allOrbitNames = Object.keys(data);
-            
-            // Filter out planets to get only asteroids
-            const asteroidNames = allOrbitNames.filter(
-              name => !INITIAL_PLANET_COLORS.hasOwnProperty(name)
-            );
-            
-            // Generate fixed random list using deterministic seed
-            const seededRandom = (seed) => {
-              let x = Math.sin(seed++) * 10000;
-              return x - Math.floor(x);
-            };
-            
-            const shuffled = [...asteroidNames];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-              const j = Math.floor(seededRandom(i + 42) * (i + 1));
-              [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            
-            // Store 99 asteroids to hide (or less if there aren't that many)
-            hiddenAsteroids.current = shuffled.slice(0, Math.min(99, asteroidNames.length));
-            isInitialized.current = true;
-          }
-        } catch (e) {
-          console.error('Error loading orbits for hiding:', e);
-        }
-      }
-      
-      initHiddenAsteroids();
-    }
-  }, []);
 
   // Auto-refresh 1 second after opening
   useEffect(() => {
@@ -193,7 +169,8 @@ function OrbitSimulator({ onReturn, targetAsteroid }) {
       <div className="controlsPanel">
         {/* Asteroid control on the left */}
         <div className="controlItem">
-          <label htmlFor="asteroidColor">Asteroids</label>
+          {/* TRADUCCIÓN: Usamos el mapa para poner "Asteroides" */}
+          <label htmlFor="asteroidColor">{PLANET_NAME_MAP["Asteroids"]}</label>
           <input
             type="color"
             id="asteroidColor"
@@ -209,7 +186,8 @@ function OrbitSimulator({ onReturn, targetAsteroid }) {
         <div className="planetsGrid">
           {Object.entries(planetColors).map(([name, color]) => (
             <div className="controlItem" key={name}>
-              <label htmlFor={`${name}-color`}>{name}</label>
+              {/* TRADUCCIÓN: Usamos el mapa para los nombres de los planetas */}
+              <label htmlFor={`${name}-color`}>{PLANET_NAME_MAP[name] || name}</label>
               <input
                 type="color"
                 id={`${name}-color`}
@@ -226,21 +204,20 @@ function OrbitSimulator({ onReturn, targetAsteroid }) {
         <button className="simulatorActionButton refreshButton" onClick={handleRefresh}>
           ↻ Recargar
         </button>
-        <button className="simulatorActionButton refreshButton" onClick={onReturn}>
-          Mostrar detalles
-        </button>
         <button className='simulatorActionButton refreshButton' onClick={toggleHideOrbits}>
-          {hideOrbits ? 'Mostar otros asteroides' : 'Ocultar otros asteroides'}
+          {hideOrbits ? 'Mostrar otros asteroides' : 'Ocultar otros asteroides'}
+        </button>
+        <button className="simulatorActionButton refreshButton" onClick={onReturn}>
+          DETALLES DEL ASTEROIDE
         </button>
       </div>
 
-      <Suspense fallback={<div className="text-white">Loading Simulator...</div>}>
+      <Suspense fallback={<div className="text-white">Cargando simulador de órbitas...</div>}>
         <Canvas key={canvasKey} camera={{ position: [20, 20, 20], fov: 75, near: 0.1, far: 1000 }}>
           <Scene 
             planetColors={planetColors} 
             asteroidColor={asteroidColor}
             hideOrbits={hideOrbits}
-            hiddenAsteroids={hiddenAsteroids}
             targetAsteroid={targetAsteroid}
           />
           
